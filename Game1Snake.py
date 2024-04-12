@@ -18,9 +18,6 @@ BLUE = (50, 153, 213)
 # Set the size of the snake
 BLOCK_SIZE = 20
 
-# Set the speed of the snake
-SPEED = 20
-
 # Create a font object
 font_style = pygame.font.SysFont(None, 50)
 
@@ -35,7 +32,7 @@ def our_snake(BLOCK_SIZE, snake_list):
         pygame.draw.rect(screen, BLUE, [x[0], x[1], BLOCK_SIZE, BLOCK_SIZE])
 
 # Define the game loop function
-def gameLoop():
+def gameLoop(speed):
     game_over = False
     game_close = False
 
@@ -66,7 +63,7 @@ def gameLoop():
                         game_over = True
                         game_close = False
                     if event.key == pygame.K_c:
-                        gameLoop()
+                        gameLoop(speed)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -111,7 +108,7 @@ def gameLoop():
             foody = round(random.randrange(0, HEIGHT - BLOCK_SIZE) / BLOCK_SIZE) * BLOCK_SIZE
             length_of_snake += 1
 
-        clock.tick(SPEED)
+        clock.tick(speed)
 
     pygame.quit()
     quit()
@@ -123,5 +120,19 @@ pygame.display.set_caption("Snake Game")
 # Set the clock
 clock = pygame.time.Clock()
 
+# Ask user for skill level
+skill_level = input("Choose your skill level (beginner, medium, professional): ").lower()
+
+# Set speed based on skill level
+if skill_level == "beginner":
+    speed = 5
+elif skill_level == "medium":
+    speed = 10
+elif skill_level == "professional":
+    speed = 15
+else:
+    print("Invalid skill level. Defaulting to medium.")
+    speed = 10
+
 # Run the game loop
-gameLoop()
+gameLoop(speed)
