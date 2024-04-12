@@ -1,0 +1,53 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the screen
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Angry Birds")
+
+# Set up colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
+
+# Set up game objects
+bird_radius = 20
+bird_x, bird_y = 100, HEIGHT // 2
+bird_color = RED
+bird_velocity = [0, 0]
+
+# Set up game loop
+running = True
+while running:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                bird_velocity[1] = -10
+
+    # Update bird position
+    bird_y += bird_velocity[1]
+
+    # Clear the screen
+    screen.fill(WHITE)
+
+    # Draw bird
+    pygame.draw.circle(screen, bird_color, (bird_x, int(bird_y)), bird_radius)
+
+    # Update the display
+    pygame.display.flip()
+
+    # Cap the frame rate
+    pygame.time.Clock().tick(30)
+
+# Quit Pygame
+pygame.quit()
+sys.exit()
